@@ -1,1 +1,113 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+
+  @if(error) {
+    <div class="error">
+      {{ error }}
+    </div>
+  }
+  <form
+    [formGroup]="dashboardForm"
+    (ngSubmit)="save()">
+    <section
+      class="section"
+      formGroupName="profile">
+      <h2>User Data</h2>
+      <div>
+        <label>First Name</label>
+        <input
+          type="text"
+          formControlName="firstName">
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input
+          type="text"
+          formControlName="lastName">
+      </div>
+      <div>
+        <label>Email</label>
+
+        <input
+          type="email"
+          formControlName="email">
+      </div>
+
+      @if(
+        dashboardForm.controls.profile.controls.email.value !== authService.currentUser()?.email
+        ) {
+        <div>
+          <label>
+            Please confirm your email
+          </label>
+
+          <input
+            type="email"
+            formControlName="emailConfirmation">
+        </div>
+      }
+
+      @if(
+        dashboardForm.controls.profile.errors?.['fieldsDoNotMatch']
+        ) {
+        <small>
+          Email addresses do not match.
+        </small>
+      }
+    </section>
+    <section
+      class="section"
+      formGroupName="password">
+      <h2>Change Password</h2>
+      <div>
+        <label>Current Password</label>
+        <input
+          type="password"
+          formControlName="oldPassword">
+      </div>
+      <div>
+        <label>New Password</label>
+        <input
+          type="password"
+          formControlName="newPassword">
+      </div>
+      <div>
+        <label>Confirm New Password</label>
+        <input
+          type="password"
+          formControlName="newPasswordConfirmation">
+      </div>
+      @if(
+        dashboardForm.controls.password.errors?.['passwordFieldsRequired']
+        ) {
+        <small>
+          Please fill all password fields.
+        </small>
+      }
+      @if(
+        dashboardForm.controls.password.errors?.['passwordTooShort']
+        ) {
+        <small>
+          Password must be at least 8 characters long.
+        </small>
+      }
+      @if(
+        dashboardForm.controls.password.errors?.['fieldsDoNotMatch']
+        ) {
+        <small>
+          Passwords do not match.
+        </small>
+      }
+    </section>
+    <button
+      type="submit"
+      [disabled]="loading">
+
+      @if(loading) {
+        Saving...
+      } @else {
+        Save Changes
+      }
+    </button>
+  </form>
+</div>

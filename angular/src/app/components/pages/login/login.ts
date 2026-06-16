@@ -33,6 +33,8 @@ export class Login {
     this.loading = true;
     this.error = null;
 
+    // TODO Login Error Handling. Currently the page just stops (symfony might crash/throw an exception
+    //  before angular handles the response)
     this.authService
       .login(this.form.controls.username.value, this.form.controls.password.value)
       .pipe(finalize(() =>  {this.loading = false;console.log('FINALIZE');}))
@@ -40,16 +42,16 @@ export class Login {
         next: (response) => {
           localStorage.setItem('jwt', response.token);
 
-          this.authService
-            .loadCurrentUser()
-            .subscribe({
-              next: () => {
-                this.router.navigate(['/']);
-              }
-            });
+          this.authService.loadCurrentUser().subscribe({
+            next: () => {
+              this.loading = false;
+              this.router.navigate(['/']);
+            },
+          });
         },
 
         error: (error) => {
+          this.loading = false;
           if (error.status === 401) {
             this.error = 'Invalid username or password';
           } else {

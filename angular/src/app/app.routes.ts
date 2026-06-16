@@ -5,6 +5,7 @@ import { CartPage } from './components/pages/cart-page/cart-page';
 import { Login } from './components/pages/login/login';
 import { authGuard } from './guards/auth/auth-guard';
 import { Register } from './components/pages/register/register';
+import { Dashboard } from './components/pages/dashboard/dashboard';
 
 export const routes: Routes = [
   {
@@ -24,16 +25,21 @@ export const routes: Routes = [
     component: FoodPage,
   },
   {
-    path: 'cart-page',
-    component: CartPage,
-    canActivate: [authGuard],
-  },
-  {
     path: 'login',
     component: Login,
   },
   {
     path: 'register',
     component: Register,
+  },
+  {
+    path: 'dashboard',
+    component: Dashboard,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'cart-page',
+    component: CartPage,
+    canActivate: [authGuard],
   },
 ];

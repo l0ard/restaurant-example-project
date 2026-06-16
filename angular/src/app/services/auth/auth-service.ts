@@ -21,46 +21,29 @@ export class AuthService {
     return this.currentUser() !== null;
   }
 
-  login(
-    username: string,
-    password: string
-  ): Observable<LoginResponse> {
-    return this.http.post<{token: string}>(
-      '/api/login',
-      {
-        username,
-        password
-      }
-    )
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<{ token: string }>('/api/login', {
+      username,
+      password,
+    });
   }
 
-  register(
-    username: string,
-    email: string,
-    password: string
-  ){
-    return this.http.post(
-      '/api/register',
-      {
-        username,
-        email,
-        password
-      }
-    )
+  register(username: string, email: string, password: string) {
+    return this.http.post('/api/register', {
+      username,
+      email,
+      password,
+    });
   }
 
   loadCurrentUser() {
-    return this.http.get<User>(
-      '/api/user'
-    ).pipe(
-      tap(user => this.currentUser.set(user))
-    );
+    return this.http.get<User>('/api/user').pipe(tap((user) => this.currentUser.set(user)));
   }
 
   initialize() {
     const token = localStorage.getItem('jwt');
 
-    if(!token){
+    if (!token) {
       return;
     }
 
@@ -68,7 +51,7 @@ export class AuthService {
       error: () => {
         localStorage.removeItem('jwt');
         this.currentUser.set(null);
-      }
+      },
     });
   }
 
@@ -76,10 +59,26 @@ export class AuthService {
     localStorage.removeItem('jwt');
     this.currentUser.set(null);
 
-
-
     //TODO temporary fix until data-access based on login is fully conceptualised
     window.location.reload();
     //this.router.navigate(['/']);
+  }
+
+  changePassword(
+    oldPassword: string,
+    newPassword: string
+  ) {
+    return this.http.put('/api/user/password', {
+      oldPassword,
+      newPassword,
+    });
+  }
+  updateUser(
+    data: Partial<User>
+  ) {
+    return this.http.put(
+      '/api/user',
+      data
+    );
   }
 }

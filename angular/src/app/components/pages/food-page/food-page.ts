@@ -16,9 +16,9 @@ import { AuthService } from '../../../services/auth/auth-service';
   styleUrl: './food-page.scss',
 })
 export class FoodPage {
-  activatedRoute = inject(ActivatedRoute);
+  private activatedRoute = inject(ActivatedRoute);
   authService = inject(AuthService);
-  foodService = inject(FoodService);
+  private foodService = inject(FoodService);
   private cartService = inject(CartService);
   private router = inject(Router);
 

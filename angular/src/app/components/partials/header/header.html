@@ -11,9 +11,9 @@
         } @else {
 
         <li class="menu-container">
-          <a routerLink="/dashboard">{{ currentUser()?.username }}</a>
+          <span>{{ currentUser()?.username | titlecase }}</span>
           <div class="menu">
-            <a routerLink="/profile">Profile</a>
+            <a routerLink="/dashboard">Profile</a>
             <a routerLink="/orders">Orders</a>
           </div>
         </li>
