@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+    push:
+        branches:
+            - deployment
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy on Uberspace
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.UBERSPACE_HOST }}
+                  username: ${{ vars.UBERSPACE_USER }}
+                  key: ${{ secrets.UBERSPACE_SSH_KEY }}
+                  script: |
+                      ~/deploy.sh
