@@ -17,4 +17,4 @@ jobs:
                   username: ${{ vars.UBERSPACE_USER }}
                   key: ${{ secrets.UBERSPACE_SSH_KEY }}
                   script: |
-                      ~/deploy.sh
+                      ~/deploy-restaurant.sh
