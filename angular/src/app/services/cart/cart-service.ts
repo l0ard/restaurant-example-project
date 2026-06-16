@@ -2,7 +2,7 @@ import { effect, inject, Injectable, signal } from '@angular/core';
 import { Cart } from '../../shared/models/Cart';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth/auth-service';
+import {AuthService } from '../auth/auth-service';
 
 @Injectable({
   providedIn: 'root',
